@@ -39,7 +39,16 @@ class BlockChain:
         newBlock.hash = newBlock.calculateHash()
         self.chain.append(newBlock)
         
-
+    def isChainValid(self):
+        for i in range(1,len(self.chain)):            
+            currentBlock = self.chain[i]
+            previousBlock = self.chain[i - 1]
+            
+            if(currentBlock.hash != currentBlock.calculateHash()):
+                return False
+            if(currentBlock.previousHash != previousBlock.hash):
+                return False
+        return True
         
 
 print("Initialzing GauravCoin.......")
@@ -50,7 +59,12 @@ gauravCoin.addBlock(Block(1,"10/01/2018",{'amount' : 4 }))
 print("Adding Block 2")
 gauravCoin.addBlock(Block(2,"13/01/2018",{'amount' : 8 }))
 
-
+print("Is chain Valid " + str(gauravCoin.isChainValid()))
+gauravCoin.chain[1].data = {'amount' : 16}
+gauravCoin.chain[1].hash = gauravCoin.chain[1].calculateHash()
+gauravCoin.chain[2].previousHash = gauravCoin.chain[1].calculateHash()
+gauravCoin.chain[2].hash = gauravCoin.chain[2].calculateHash()
+print("Is chain Valid " + str(gauravCoin.isChainValid()))
 
 
 
