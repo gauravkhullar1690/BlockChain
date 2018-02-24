@@ -45,9 +45,9 @@ class BlockChain:
     
     def __init__(self):
         self.chain = [self.createGenesisBlock()]
-        self.difficulty = 2
+        self.difficulty = 4
         self.pendingTransactions = []
-        self.miningReward = 10
+        self.miningReward = 100
         
     
     def createGenesisBlock(self):
@@ -72,7 +72,7 @@ class BlockChain:
         
     def getBalanceOfAddress(self,address):
         balance = 0
-        for block in self.chain[2:]:
+        for block in self.chain[1:]:
             for transaction in block.transactions:
                 if transaction.fromAddress == address:
                     balance -=  transaction.amount
@@ -103,7 +103,10 @@ gauravCoin.createTransaction(Transaction("address1","address2",100))
 gauravCoin.createTransaction(Transaction("address2","address3",50))
 gauravCoin.minPendingTransactions("gaurav")
 
-print(gauravCoin.getBalanceOfAddress("address2"))
+gauravCoin.createTransaction(Transaction("gaurav","address4",50))
+gauravCoin.minPendingTransactions("address4")
+
+print(gauravCoin.getBalanceOfAddress("gaurav"))
 
 
     
